@@ -33,7 +33,7 @@ android {
 }
 
 dependencies {
-
+    implementation ("commons-net:commons-net:3.7");
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.constraintlayout)
