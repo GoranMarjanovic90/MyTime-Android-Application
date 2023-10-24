@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
             return ntpDateFormat.format(ntpDate);
         } catch (IOException e) {
             e.printStackTrace();
-            return "I'm offline!";
+            return "Failed to fetch NTP time";
         } finally {
             client.close();
         }
