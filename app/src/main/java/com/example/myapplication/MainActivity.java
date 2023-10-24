@@ -2,11 +2,13 @@ package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.apache.commons.net.ntp.NTPUDPClient;
 import org.apache.commons.net.ntp.TimeInfo;
@@ -29,30 +31,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         updateButton = findViewById(R.id.updateButton);
         pauseResumeButton = findViewById(R.id.pauseResumeButton);
         systemTimeTextView = findViewById(R.id.systemTimeTextView);
         ntpTimeTextView = findViewById(R.id.ntpTimeTextView);
 
-
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!isPaused) {
-
                     Date systemDate = new Date();
                     SimpleDateFormat systemDateFormat = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
-
                     String formattedSystemTime = systemDateFormat.format(systemDate);
                     systemTimeTextView.setText("System Time: " + formattedSystemTime);
                     systemTimeTextView.setTextSize(20);
-
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
-
-                            final String ntpTime = getNtpTime();
+                            final String ntpTime = getNtpTime(getApplicationContext());
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -66,19 +62,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
         pauseResumeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 isPaused = !isPaused;
-
                 pauseResumeButton.setText(isPaused ? "Resume" : "Pause");
             }
         });
     }
 
-
-    private String getNtpTime() {
+    private String getNtpTime(Context context) {
         NTPUDPClient client = new NTPUDPClient();
         client.setDefaultTimeout(5000);
 
@@ -86,19 +79,26 @@ public class MainActivity extends AppCompatActivity {
             client.open();
             TimeInfo timeInfo = client.getTime(InetAddress.getByName("pool.ntp.org"));
 
-
             long ntpTimeMillis = timeInfo.getMessage().getTransmitTimeStamp().getTime();
-
             Date ntpDate = new Date(ntpTimeMillis);
             SimpleDateFormat ntpDateFormat = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
-
 
             return ntpDateFormat.format(ntpDate);
         } catch (IOException e) {
             e.printStackTrace();
+            showToastException("NTP time fetch failed. Please check your network.",context);
             return "Failed to fetch NTP time";
         } finally {
             client.close();
         }
+    }
+
+    private void showToastException(final String message, final Context context) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
