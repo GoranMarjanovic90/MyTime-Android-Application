@@ -7,10 +7,8 @@ Welcome to the Android NTP Time App, an application designed to provide you with
 
 Here are some screenshots of the project:
 
-![Screenshot 1](https://github.com/GoranMarjanovic90/MyTime-Android-Application/blob/main/Screenshots/Screenshot_20231022_170528.png)
-![Screenshot 2](https://github.com/GoranMarjanovic90/MyTime-Android-Application/blob/main/Screenshots/Screenshot_20231024_153432.png)
-![Screenshot 1](https://github.com/GoranMarjanovic90/MyTime-Android-Application/blob/main/Screenshots/Screenshot_20231024_153446.png)
-![Screenshot 1](https://github.com/GoranMarjanovic90/MyTime-Android-Application/blob/main/Screenshots/Screenshot_20231024_153510.png)
+![Screenshot 1](https://github.com/GoranMarjanovic90/MyTime-Android-Application/blob/main/Screenshots/Screenshot_20231102_102055.png)
+![Screenshot 2](https://github.com/GoranMarjanovic90/MyTime-Android-Application/blob/main/Screenshots/Screenshot_20231102_102125.png)
 
 ## Features
 
